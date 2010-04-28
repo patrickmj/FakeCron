@@ -1,17 +1,19 @@
 FakeCron allows a plugin to execute tasks periodically without setting up cron on the server.
 
 Based on the PoorMansCron Drupal module: http://drupal.org/project/poormanscron
+A small bit of javascript checks whether it's time to run the task and fires it off if so.
 
 Usage:
 
-Create a new FakeCron task with the following information (or have your plugin do it behind the scenes):
+In your plugin's controller, make an action that FakeCron will run after the specified interval
+(usually it starts an import process).
 
-interval : the time interval between runs
+Also, reate a new FakeCron task with the following information (or have your plugin do it behind the scenes):
+
+name
+description
+interval : the time interval between runs in seconds
 controller : the controller in your plugin
-action : the controller action to fire
+action : the controller action to fire when its time to run the task
+data : optional additional data to pass to your controller action for handling the fakecron run
 
-Then, add the following code to the public theme footer:
-fakecron($controller, $action);
-
-That helper will insert a small piece of javascript that will call some AJAX to fire off the action
-after the specified interval
