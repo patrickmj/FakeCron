@@ -50,7 +50,7 @@ class FakeCron_TasksController extends Omeka_Controller_Action
 	public function testAction($task = null)
 	{
 		$this->_helper->viewRenderer->setNoRender();
-		echo "{fakecron: {test: 'result'}}";
+		echo $task->data;
 	}	
 }
 ?>

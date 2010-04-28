@@ -20,7 +20,6 @@ class FakeCron_Task extends Omeka_Record
 		$preJSON->controller = $this->controller;
 		$preJSON->action = $this->action;
 		$preJSON->runNext = (strtotime($this->last_run) + $this->interval) * 1000;
-		$preJSON->data = unserialize($this->data);
 		return json_encode($preJSON);
 	}
 

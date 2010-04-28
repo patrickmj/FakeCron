@@ -6,7 +6,6 @@ date_default_timezone_set('America/New_York');
 add_plugin_hook('install', 'fake_cron_install');
 add_plugin_hook('uninstall', 'fake_cron_uninstall');
 add_plugin_hook('public_theme_header', 'fake_cron_public_theme_header');
-add_plugin_hook('public_theme_footer', 'fake_cron_public_theme_footer');
 add_plugin_hook('define_routes', 'fake_cron_define_routes');
 add_filter('admin_navigation_main', 'fake_cron_admin_navigation_main');
 
@@ -77,13 +76,6 @@ function fake_cron_public_theme_header()
 	
 }
 
-
-function fake_cron_public_theme_footer()
-{
-	
-	
-	
-}
 
 
 ?>
