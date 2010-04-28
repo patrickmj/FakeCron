@@ -31,14 +31,14 @@ class FakeCron_TasksController extends Omeka_Controller_Action
 		$actionName = $this->_getParam('act');
 		$tasks = $this->getDb()->getTable('FakeCron_Task')->findBy(array('controllerName'=>$controllerName, 'actionName'=>$actionName));
 
-		//there should be only one task per controller/action
-		$task = $tasks[0];
-		$task->last_run = date('Y-m-d G:i:s');				
-		$task->save();
+		foreach($tasks as $task) {
+			$task->last_run = date('Y-m-d G:i:s');				
+			$task->save();		
+			$controller = new $controllerName($request, $response);
+			$controller->$actionName($task);							
+		}
 		
-		$controller = new $controllerName($request, $response);
-		$controller->$actionName();		
-		
+
 		if ($_GET['isManual']) {
 			$this->redirect->goto('browse');
 		}
@@ -47,7 +47,7 @@ class FakeCron_TasksController extends Omeka_Controller_Action
 	/**
 	 * testAction just lets me test things
 	 */
-	public function testAction()
+	public function testAction($task = null)
 	{
 		$this->_helper->viewRenderer->setNoRender();
 		echo "{fakecron: {test: 'result'}}";

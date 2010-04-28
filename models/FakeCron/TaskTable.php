@@ -27,6 +27,15 @@ class FakeCron_TaskTable extends Omeka_Db_Table
 		}
 				
 	}
-	
+	public function buildTasksJSON()
+	{
+		$tasks = $this->findAll();
+		$preJSONArray = array();
+		foreach($tasks as $task) {
+			//$task buildJSON returns and encoded string, so decode it 
+			$preJSONArray[] = json_decode($task->buildJSON());
+		}
+		return json_encode($preJSONArray);
+	}
 }
 ?>
