@@ -1,8 +1,12 @@
 <?php
 
-
-
-
+interface FakeCron_TaskInterface
+{
+	
+	public function run($params = null);
+	
+	
+}
 
 class FakeCron_TasksController extends Omeka_Controller_Action
 {
@@ -12,6 +16,24 @@ class FakeCron_TasksController extends Omeka_Controller_Action
 		$this->_modelClass = "FakeCron_Task";
 	}
 	
+	public function editAction()
+	{
+		if(isset($_POST['params'])) {
+			$_POST['params'] = serialize(trim($_POST['params']) );
+		}
+		
+		parent::editAction();
+	}
+	
+	public function addAction()
+	{
+		if(isset($_POST['params'])) {
+			$_POST['params'] = serialize(trim($_POST['params'] ));
+		}
+		
+		parent::addAction();		
+	}
+	
 	/**
 	 * fakecronAction fires off the requested action
 	 * 
@@ -19,38 +41,23 @@ class FakeCron_TasksController extends Omeka_Controller_Action
 	 */
 	
 	public function fakecronAction()
-	{
-		
-		$request = $this->getRequest();
-		$response = $this->getResponse();
-		
+	{		
 		// tell Omeka not to try to make a view
 		$this->_helper->viewRenderer->setNoRender();
 		
-		$controllerName = $this->_getParam('con');
-		$actionName = $this->_getParam('act');
-		$tasks = $this->getDb()->getTable('FakeCron_Task')->findBy(array('controllerName'=>$controllerName, 'actionName'=>$actionName));
-
-		foreach($tasks as $task) {
-			$task->last_run = date('Y-m-d G:i:s');				
-			$task->save();		
-			$controller = new $controllerName($request, $response);
-			$controller->$actionName($task);							
-		}
+		$taskId = $this->_getParam('taskId');
+		$task = $this->getDb()->getTable('FakeCron_Task')->find($taskId);
+		$task->last_run = date('Y-m-d G:i:s');
+		$fakeCronClass = new $task->plugin_class();
+				
+		$fakeCronClass->run($task->params);
+		$task->save();		
 		
 
 		if ($_GET['isManual']) {
 			$this->redirect->goto('browse');
 		}
-	}
-
-	/**
-	 * testAction just lets me test things
-	 */
-	public function testAction($task = null)
-	{
-		$this->_helper->viewRenderer->setNoRender();
-		echo $task->data;
 	}	
 }
+
 ?>

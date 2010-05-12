@@ -26,11 +26,9 @@ head($head);
 <?php echo text(array('name'=>'interval'), $fakecron_task->interval, 'Interval'); ?>
 </div>
 <div class="input">
-<?php echo text(array('name'=>'controller'), $fakecron_task->controller, 'Controller'); ?>
+<?php echo text(array('name'=>'plugin_class'), $fakecron_task->plugin_class, 'Class for handling your cron task'); ?>
 </div>
-<div class="input">
-<?php echo text(array('name'=>'action'), $fakecron_task->action, 'Action'); ?>
-</div>
+
 
 <?php echo submit(array('class'=>'submit')); ?>
 

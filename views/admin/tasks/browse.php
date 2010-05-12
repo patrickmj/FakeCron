@@ -20,8 +20,8 @@ head($head);
 			<th>Description</th>
 			<th>Interval</th>
 			<th>Last Run</th>
-			<th>Controller</th>
-			<th>Action</th>
+			<th>Plugin Class for FakeCron job</th>
+			<th>Params</th>
 			<th>Edit?</th>
 			<th>Fire now?</th>
 		</tr>
@@ -33,11 +33,11 @@ head($head);
 		<td><?php echo $task->description; ?> </td>	
 		<td><?php echo $task->interval; ?> </td>	
 		<td><?php echo $task->last_run; ?></td>	
-		<td><?php echo $task->controller; ?></td>		
-		<td><?php echo $task->action; ?></td>		
+		<td><?php echo $task->plugin_class; ?></td>		
+		<td><?php echo print_r(unserialize($task->params) ) ; ?></td>		
 			
 		<td><a href="<?php echo uri('fake-cron/tasks/edit/id/' . $task->id); ?>">Edit</a></td>	
-		<td><a href="<?php echo uri("fake-cron/tasks/fakecron/$task->controller/$task->action?isManual=true"); ?>">Fire</a></td>
+		<td><a href="<?php echo uri("fake-cron/tasks/fakecron/$task->id?isManual=true"); ?>">Fire</a></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

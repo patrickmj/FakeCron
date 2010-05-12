@@ -27,10 +27,10 @@ head($head);
 <?php echo text(array('name'=>'interval'), '', 'Interval'); ?>
 </div>
 <div class="input">
-<?php echo text(array('name'=>'controller'), '', 'Controller'); ?>
+<?php echo text(array('name'=>'plugin_class'), '', 'Class for handling your cron task'); ?>
 </div>
 <div class="input">
-<?php echo text(array('name'=>'action'), '', 'Action'); ?>
+<?php echo textarea(array('name'=>'params'), '', 'Params as data to be serialized'); ?>
 </div>
 
 <?php echo submit(array('class'=>'submit')); ?>
