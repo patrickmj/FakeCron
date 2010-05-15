@@ -1,13 +1,5 @@
 <?php
 
-interface FakeCron_CronTaskInterface
-{
-	
-	public function run($task = null);
-	
-} 
-
-
 class FakeCron_Task extends Omeka_Record 
 {
 	public $id;
@@ -31,12 +23,4 @@ class FakeCron_Task extends Omeka_Record
 	}
 }
 
-class FakeCron_CronTask implements FakeCron_CronTaskInterface
-{
-	
-	public function run($params = null)
-	{
-		echo "{test: 'ok'}";
-	}
-}
 ?>

@@ -18,7 +18,7 @@ function fake_cron_install() {
 	  `id` int(11) NOT NULL auto_increment,
 	  `name` text COLLATE utf8_unicode_ci NOT NULL,
 	  `description` text COLLATE utf8_unicode_ci NULL,
-	  `interval`  int(11) NULL ,	  		
+	  `interval`  int(11) DEFAULT 0,	  		
 	  `last_run` datetime DEFAULT NULL,
 	  `plugin_class` text COLLATE utf8_unicode_ci NULL,
 	  `params` text COLLATE utf8_unicode_ci NULL,

@@ -5,15 +5,37 @@ A small bit of javascript checks whether it's time to run the task and fires it 
 
 Usage:
 
-In your plugin's controller, make an action that FakeCron will run after the specified interval
-(usually it starts an import process).
+FakeCron provides an interface called FakeCron_TaskInterface with a method $run
 
-Also, reate a new FakeCron task with the following information (or have your plugin do it behind the scenes):
+To use FakeCron, implement that interface and provide the run method to perform the needed actions.
 
-name
-description
-interval : the time interval between runs in seconds
-controller : the controller in your plugin
-action : the controller action to fire when its time to run the task
-data : optional additional data to pass to your controller action for handling the fakecron run
+class MyPlugin_FakeCronTask implements FakeCron_TaskInterface
+{
 
+	public function run($params = null)
+	{
+		//do whatever the fake cron task needs to do (e.g., import items from a feed)
+	}
+
+}
+
+Then, create a new FakeCron_Task, setting the plugin_class property to the name of your implementation.
+This might happen in your install() function, or if things are more complicated in a controller or in a
+plugin's configuration.
+(See FeedImporter for an example of a more complicated situation where each record needs its own task)
+
+// Create a new FakeCron_Task for MyPlugin
+$my_plugin_task = new FakeCron_Task();
+$my_plugin_task->interval = 0;
+$my_plugin_task->name = "My Plugin's Cron Task";
+$my_plugin_task->plugin_class = "MyPlugin_FakeCronTask"; //the name of your class implementing FakeCron_TaskInterface
+$my_plugin_task->params = null; //optional params to pass to your class's run method
+$my_plugin_task->save();
+
+In your uninstall function, remove all the tasks associated with your plugin:
+
+$myPluginTasks = $db->getTable('FakeCron_Task')->findBy(array('plugin_class'=>"MyPlugin_FakeCronTask") );
+
+foreach($myPluginTasks as $myPluginTask){
+	$myPluginTask->delete();
+}
