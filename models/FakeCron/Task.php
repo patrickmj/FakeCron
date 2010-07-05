@@ -5,10 +5,11 @@ class FakeCron_Task extends Omeka_Record
 	public $id;
 	public $name;
 	public $description;
+  public $plugin_name;
 	public $plugin_class;
 	public $interval;	
 	public $last_run;
-	public $params; //params for the action run 
+	
 
 
 	/**
@@ -18,7 +19,12 @@ class FakeCron_Task extends Omeka_Record
 	public function buildJSON() {
 		$preJSON = new StdClass();
 		$preJSON->taskId = $this->id;
-		$preJSON->runNext = (strtotime($this->last_run) + $this->interval) * 1000;
+    if($this->last_run == null) {
+    	$preJSON->runNext = time();
+    } else {
+      $preJSON->runNext = (strtotime($this->last_run) + $this->interval) * 1000;	
+    }
+		
 		return json_encode($preJSON);
 	}
 }

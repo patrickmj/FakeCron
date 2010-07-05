@@ -24,15 +24,16 @@ class FakeCron_TasksController extends Omeka_Controller_Action
 		
 		parent::editAction();
 	}
-	
-	public function addAction()
-	{
-		if(isset($_POST['params'])) {
-			$_POST['params'] = serialize(trim($_POST['params'] ));
-		}
-		
-		parent::addAction();		
-	}
+
+  public function addAction()
+  {
+  	flas('Tasks can only be added via their plugins');
+  }
+
+  public function deleteAction()
+  {
+  	flash('Tasks can only be deleted via their plugins');
+  }
 	
 	/**
 	 * fakecronAction fires off the requested action

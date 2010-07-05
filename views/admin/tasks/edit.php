@@ -10,7 +10,7 @@ head($head);
 
 
 
-<h1>Add A Fake Cron Task</h1>
+<h1>Edit Fake Cron Task "<?php echo $fakecron_task->name ; ?>"</h1>
 <?php echo flash(); ?>
 
 <fieldset class="set">
@@ -23,18 +23,19 @@ head($head);
 <?php echo textarea(array('name'=>'description'), $fakecron_task->description, 'Description'); ?>
 </div>
 <div class="input">
-<?php echo text(array('name'=>'interval'), $fakecron_task->interval, 'Interval'); ?>
+<?php echo text(array('name'=>'interval'), $fakecron_task->interval, 'Interval'); ?> seconds
 </div>
-<div class="input">
-<?php echo text(array('name'=>'plugin_class'), $fakecron_task->plugin_class, 'Class for handling your cron task'); ?>
+<div>
+<p style="font-weight: bold; width: 198px; float: left;">Plugin Name</p><p><?php echo $fakecron_task->plugin_name; ?></p>
+</div>
+<div>
+<p style="font-weight: bold; width: 198px; float: left;">Plugin Class</p><p><?php echo $fakecron_task->plugin_class; ?></p>
 </div>
 
 
 <?php echo submit(array('class'=>'submit')); ?>
 
-<p id="delete_item_link">
-	<a class="delete" href="<?php echo uri('delete') . $fakecron_task->id ?>">Delete This Task</a>       
-</p>
+
 </form>
 </fieldset>
 <?php foot(); ?>

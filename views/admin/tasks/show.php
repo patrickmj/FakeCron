@@ -13,10 +13,11 @@ head($head);
 <h1><?php echo $fakecron_task->name ;?></h1>
 <?php echo flash(); ?>
 
-<p><?php echo $fakecron_task->description; ?></p>
-<p><?php echo $fakecron_task->last_run; ?></p>
-<p><?php echo $fakecron_task->interval; ?></p>
-<p><?php echo $fakecron_task->plugin_class; ?></p>
-<p><?php print_r(unserialize($fakecron_task->params) ) ; ?></p>
+<p>Description: <?php echo $fakecron_task->description; ?></p>
+<p>Last Run: <?php echo $fakecron_task->last_run; ?></p>
+<p>Interval (in seconds): <?php echo $fakecron_task->interval; ?></p>
+<p>Plugin Name: <?php echo $fakecron_task->plugin_name; ?></p>
+<p>Plugin Class: <?php echo $fakecron_task->plugin_class; ?></p>
+
 
 <?php foot(); ?>

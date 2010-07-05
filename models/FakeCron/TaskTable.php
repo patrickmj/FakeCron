@@ -11,6 +11,12 @@ class FakeCron_TaskTable extends Omeka_Db_Table
 		return $select;
 	}
 	
+  public function filterByPluginName($select, $plugin_name)
+  {
+    $select->where("plugin_name = ?", $plugin_name);
+    return $select;  	
+  }  
+    
 	public function filterByFeedId($select, $feed_id)
 	{
 		$select->where("feed_id = ?", $feed_id);
@@ -33,13 +39,11 @@ class FakeCron_TaskTable extends Omeka_Db_Table
 		$tasks = $this->findAll();
 		$preJSONArray = array();
 		foreach($tasks as $task) {
-			if($task->interval != 0) {
-				$taskJSON = $task->buildJSON();			
-				//$task->buildJSON returns an encoded string, so decode it so the entire array can be safely encoded 
-				$preJSONArray[] = json_decode($task->buildJSON());				
-			}
+		  $taskJSON = $task->buildJSON();			
+			//$task->buildJSON returns an encoded string, so decode it so the entire array can be safely encoded 
+			$preJSONArray[] = json_decode($task->buildJSON());				
 		}
 		return json_encode($preJSONArray);
 	}
 }
-?>
+
